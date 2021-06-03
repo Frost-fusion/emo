@@ -12,16 +12,12 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 
 gpus = tf.config.list_physical_devices('GPU')
-if gpus:
-    try:
-        # Currently, memory growth needs to be the same across GPUs
-        for gpu in gpus:
-            tf.config.experimental.set_memory_growth(gpu, True)
-        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
-        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-    except RuntimeError as e:
-        # Memory growth must be set before GPUs have been initialized
-        print(e)
+try:
+    tf_gpus = tf.config.list_physical_devices('GPU')
+    for gpu in tf_gpus:
+        tf.config.experimental.set_memory_growth(gpu, True)
+except:
+    pass
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # command line argument
@@ -144,7 +140,7 @@ elif mode == "display":
             cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255),
                         2, cv2.LINE_AA)
 
-        cv2.imshow('Video', cv2.resize(frame, (1600, 960), interpolation=cv2.INTER_CUBIC))
+        cv2.imshow('Video', cv2.resize(frame, (720, 480), interpolation=cv2.INTER_CUBIC))
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
