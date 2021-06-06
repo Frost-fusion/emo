@@ -18,6 +18,7 @@ try:
         tf.config.experimental.set_memory_growth(gpu, True)
 except:
     pass
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # command line argument
@@ -60,7 +61,7 @@ val_dir = 'data/test'
 num_train = 28709
 num_val = 7178
 batch_size = 64
-num_epoch = 50
+num_epoch = 10
 
 train_datagen = ImageDataGenerator(rescale=1. / 255)
 val_datagen = ImageDataGenerator(rescale=1. / 255)
